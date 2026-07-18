@@ -42,6 +42,7 @@
 <div class="confetti-container" id="confettiContainer"></div>
 
 @push('scripts')
+<script src="https://www.geogebra.org/apps/deployggb.js"></script>
 <script>
 const QUIZ_DATA = {
     lessonSlug: '{{ $lesson->slug }}',

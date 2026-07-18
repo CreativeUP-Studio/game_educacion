@@ -30,29 +30,36 @@
         const letters = ['A', 'B', 'C', 'D'];
         const diffLabel = { easy: 'Fácil', medium: 'Medio', hard: 'Difícil' };
 
-        let optionsHtml = '';
+        let choices = [];
         if (q.options) {
-            q.options.forEach((opt, i) => {
-                const isSelected = answers[q.id] === opt;
-                const wasAnswered = answered[q.id];
-                let cls = '';
-                if (wasAnswered) {
-                    if (opt === q.correct_answer) cls = 'correct';
-                    else if (isSelected) cls = 'incorrect';
-                } else if (isSelected) {
-                    cls = 'selected';
-                }
-
-                optionsHtml += `
-                    <button class="option-btn ${cls}" 
-                            data-question-id="${q.id}" 
-                            data-value="${opt}"
-                            ${wasAnswered ? 'disabled' : ''}>
-                        <span class="option-letter">${letters[i] || (i+1)}</span>
-                        <span>${opt}</span>
-                    </button>`;
-            });
+            if (Array.isArray(q.options)) {
+                choices = q.options;
+            } else if (typeof q.options === 'object' && q.options.choices) {
+                choices = q.options.choices;
+            }
         }
+
+        let optionsHtml = '';
+        choices.forEach((opt, i) => {
+            const isSelected = answers[q.id] === opt;
+            const wasAnswered = answered[q.id];
+            let cls = '';
+            if (wasAnswered) {
+                if (opt === q.correct_answer) cls = 'correct';
+                else if (isSelected) cls = 'incorrect';
+            } else if (isSelected) {
+                cls = 'selected';
+            }
+
+            optionsHtml += `
+                <button class="option-btn ${cls}" 
+                        data-question-id="${q.id}" 
+                        data-value="${opt}"
+                        ${wasAnswered ? 'disabled' : ''}>
+                    <span class="option-letter">${letters[i] || (i+1)}</span>
+                    <span>${opt}</span>
+                </button>`;
+        });
 
         let explanationHtml = '';
         if (answered[q.id]) {
@@ -62,14 +69,34 @@
                 </div>`;
         }
 
+        let geogebraHtml = '';
+        if (q.type === 'geogebra') {
+            geogebraHtml = `<div id="ggb-element" class="geogebra-widget-container"></div>`;
+        }
+
         container.innerHTML = `
             <div class="question-card">
                 <span class="question-badge ${q.difficulty}">${diffLabel[q.difficulty] || q.difficulty}</span>
                 <span class="question-xp">+${q.xp_value} XP</span>
                 <div class="question-text">${q.question}</div>
+                ${geogebraHtml}
                 <div class="options-grid">${optionsHtml}</div>
                 ${explanationHtml}
             </div>`;
+
+        // Load GeoGebra dynamically if needed
+        if (q.type === 'geogebra') {
+            const materialId = (typeof q.options === 'object' && q.options.material_id) ? q.options.material_id : 'mxgqt3jk';
+            const ggbContainer = document.getElementById('ggb-element');
+            if (ggbContainer) {
+                ggbContainer.innerHTML = `
+                    <iframe src="https://www.geogebra.org/material/iframe/id/${materialId}/width/800/height/600/border/888888/sfsb/true/smb/false/stb/false/stbh/false/ai/false/asb/false/sri/true/rc/false/ld/false/sdz/true/ctl/false" 
+                            style="width: 100%; height: 100%; border: 0;" 
+                            allow="geolocation; microphone; camera; clipboard-read; clipboard-write; amap" 
+                            allowfullscreen>
+                    </iframe>`;
+            }
+        }
 
         // Bind option clicks
         container.querySelectorAll('.option-btn:not([disabled])').forEach(btn => {

@@ -32,4 +32,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'show'])->name('game.profile');
     Route::post('/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('game.profile.avatar');
     Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('game.leaderboard');
+    Route::get('/laboratory', [GameController::class, 'laboratory'])->name('game.laboratory');
 });

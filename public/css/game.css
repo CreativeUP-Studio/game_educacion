@@ -1919,3 +1919,182 @@ img { max-width: 100%; }
     .nav-center { display: none; }
     .quiz-stats { flex-direction: column; align-items: center; gap: 4px; }
 }
+
+/* GeoGebra Interactive Widget styles */
+.geogebra-widget-container {
+    width: 100%;
+    max-width: 600px;
+    height: 350px;
+    margin: 20px auto;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    border: 2px dashed rgba(108, 99, 255, 0.4);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: border-color 0.3s ease;
+}
+
+.geogebra-widget-container:hover {
+    border-color: var(--accent-purple);
+}
+
+/* Laboratory Section */
+.lab-layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 24px;
+    padding: 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+    min-height: calc(100vh - 80px);
+}
+
+.lab-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.lab-title-section h1 {
+    font-size: 1.8rem;
+    font-family: var(--font-title);
+    margin-bottom: 6px;
+    background: linear-gradient(135deg, #00D4FF 0%, #6C63FF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.lab-title-section p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.presets-container {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    backdrop-filter: blur(10px);
+}
+
+.preset-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.preset-card:hover {
+    background: rgba(108, 99, 255, 0.08);
+    border-color: rgba(108, 99, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.preset-card.active {
+    background: linear-gradient(135deg, rgba(108, 99, 255, 0.2) 0%, rgba(0, 212, 255, 0.1) 100%);
+    border-color: var(--accent-purple);
+    box-shadow: 0 4px 12px rgba(108, 99, 255, 0.2);
+}
+
+.preset-icon {
+    font-size: 1.5rem;
+}
+
+.preset-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.preset-name {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+}
+
+.preset-desc {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+}
+
+.theory-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 20px;
+    backdrop-filter: blur(10px);
+}
+
+.theory-card h3 {
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+    color: #FFD93D;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.theory-content {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.theory-content ul {
+    margin-top: 10px;
+    padding-left: 18px;
+}
+
+.theory-content li {
+    margin-bottom: 6px;
+}
+
+.lab-viewport-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 24px;
+    backdrop-filter: blur(10px);
+}
+
+.lab-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 12px;
+}
+
+.lab-header-title {
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: var(--text-primary);
+}
+
+.lab-viewport {
+    width: 100%;
+    height: 600px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+}
+
+@media (max-width: 992px) {
+    .lab-layout {
+        grid-template-columns: 1fr;
+    }
+}

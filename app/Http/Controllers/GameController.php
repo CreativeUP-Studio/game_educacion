@@ -46,4 +46,9 @@ class GameController extends Controller
 
         return view('game.map', compact('worldsData', 'user'));
     }
+
+    public function laboratory()
+    {
+        return view('game.laboratory');
+    }
 }

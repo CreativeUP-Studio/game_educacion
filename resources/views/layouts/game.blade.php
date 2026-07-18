@@ -25,6 +25,9 @@
                 <a href="{{ route('game.map') }}" class="nav-link {{ request()->routeIs('game.map') ? 'active' : '' }}">
                     <span class="nav-icon">🗺️</span> Mapa
                 </a>
+                <a href="{{ route('game.laboratory') }}" class="nav-link {{ request()->routeIs('game.laboratory') ? 'active' : '' }}">
+                    <span class="nav-icon">🧪</span> Laboratorio
+                </a>
                 <a href="{{ route('game.leaderboard') }}" class="nav-link {{ request()->routeIs('game.leaderboard') ? 'active' : '' }}">
                     <span class="nav-icon">🏆</span> Ranking
                 </a>
