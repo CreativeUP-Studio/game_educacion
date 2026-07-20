@@ -94,7 +94,7 @@
         },
         unit_circle: {
             title: "Círculo Unitario Interactivo",
-            iframeUrl: "https://www.geogebra.org/material/iframe/id/mxgqt3jk/width/800/height/600/border/888888/sfsb/true/smb/false/stb/false/stbh/false/ai/false/asb/false/sri/true/rc/false/ld/false/sdz/true/ctl/false",
+            iframeUrl: "https://www.geogebra.org/classic/bGst5fJz?embed",
             theory: {
                 title: "🟣 El Círculo Trigonométrico",
                 html: "El círculo unitario tiene radio = 1. Arrastra el punto en la circunferencia y observa:<br><ul><li>La coordenada X del punto representa el <strong>Coseno</strong>.</li><li>La coordenada Y del punto representa el <strong>Seno</strong>.</li><li>La recta tangente representa la <strong>Tangente</strong>.</li><li>Cómo cambian los signos de las razones en los 4 cuadrantes.</li></ul>"
@@ -102,10 +102,10 @@
         },
         waves: {
             title: "Generador de Ondas",
-            iframeUrl: "https://www.geogebra.org/material/iframe/id/j5z7sdbw/width/800/height/600/border/888888/sfsb/true/smb/false/stb/false/stbh/false/ai/false/asb/false/sri/true/rc/false/ld/false/sdz/true/ctl/false",
+            iframeUrl: "https://www.geogebra.org/classic/kkgbez4j?embed",
             theory: {
                 title: "🌊 Ondas Trigonométricas",
-                html: "Una función trigonométrica generalizada se escribe como: <code>y = A sen(B x + C) + D</code>.<br>Interactúa con los deslizadores para entender:<br><ul><li><strong>Amplitud (A)</strong>: Modifica la altura máxima de la onda.</li><li><strong>Frecuencia (B)</strong>: Altera cuántas ondas se forman en un tramo.</li><li><strong>Fase (C)</strong>: Desplaza la gráfica a la izquierda o derecha.</li><li><strong>Desplazamiento (D)</strong>: Mueve la onda verticalmente.</li></ul>"
+                html: "Una función trigonométrica generalizada se escribe como: <code>y = A sen(B x + C)</code>.<br>Interactúa con los deslizadores para entender:<br><ul><li><strong>Amplitud (A)</strong>: Modifica la altura máxima de la onda.</li><li><strong>Frecuencia / Periodo (B)</strong>: Altera cuántas ondas se forman en un tramo.</li><li><strong>Fase (C)</strong>: Desplaza la gráfica a la izquierda o derecha.</li></ul>"
             }
         }
     };

@@ -28,7 +28,7 @@ return new class extends Migration
                 'type' => 'geogebra',
                 'question' => 'Interactúa con la gráfica de GeoGebra para arrastrar el punto y formar un ángulo obtuso. ¿Cuál de los siguientes valores es un ángulo obtuso?',
                 'options' => json_encode([
-                    'material_id' => 'mxgqt3jk',
+                    'material_id' => 'bGst5fJz',
                     'choices' => ['45°', '90°', '135°', '180°']
                 ]),
                 'correct_answer' => '135°',
@@ -46,7 +46,7 @@ return new class extends Migration
                 'type' => 'geogebra',
                 'question' => 'Usa el triángulo interactivo de GeoGebra para observar cómo cambian las razones. Si ajustas el ángulo a 45°, ¿cómo son el cateto opuesto y el cateto adyacente?',
                 'options' => json_encode([
-                    'material_id' => 'mxgqt3jk',
+                    'material_id' => 'bGst5fJz',
                     'choices' => ['El opuesto es mayor', 'El adyacente es mayor', 'Son iguales', 'La hipotenusa es igual al opuesto']
                 ]),
                 'correct_answer' => 'Son iguales',

@@ -63,10 +63,52 @@
 
         let explanationHtml = '';
         if (answered[q.id]) {
-            explanationHtml = `
-                <div class="explanation-box">
-                    <strong>📖 Explicación:</strong> ${q.explanation}
-                </div>`;
+            const selectedVal = answers[q.id];
+            const isCorrect = selectedVal === q.correct_answer;
+
+            if (isCorrect) {
+                const compliments = [
+                    '¡Excelente deducción! Vas por muy buen camino.',
+                    '¡Impecable! Tienes un excelente dominio de este concepto.',
+                    '¡Respuesta perfecta! Tu razonamiento es muy preciso.',
+                    '¡Brillante! Estás dominando la trigonometría.',
+                ];
+                const compliment = compliments[(q.id * 7) % compliments.length];
+                
+                let streakText = '';
+                if (streak > 1) {
+                    streakText = `<div class="feedback-streak-bonus">🔥 ¡Llevas una racha de ${streak} respuestas correctas consecutivas!</div>`;
+                }
+
+                explanationHtml = `
+                    <div class="feedback-box feedback-box--correct">
+                        <div class="feedback-header">
+                            <span class="feedback-title">🎉 ¡Correcto!</span>
+                            <span class="feedback-xp-badge">+${q.xp_value} XP</span>
+                        </div>
+                        <p class="feedback-compliment">${compliment}</p>
+                        <div class="feedback-explanation">
+                            <strong>📖 Retroalimentación extra:</strong> ${q.explanation}
+                        </div>
+                        ${streakText}
+                    </div>`;
+            } else {
+                explanationHtml = `
+                    <div class="feedback-box feedback-box--incorrect">
+                        <div class="feedback-header">
+                            <span class="feedback-title">❌ Respuesta Incorrecta</span>
+                        </div>
+                        <div class="feedback-correct-answer">
+                            💡 La respuesta correcta era: <strong>${q.correct_answer}</strong>
+                        </div>
+                        <div class="feedback-explanation">
+                            <strong>📖 Explicación y Corrección:</strong> ${q.explanation}
+                        </div>
+                        <div class="feedback-tip">
+                            💪 ¡De los errores se aprende! Revisa el concepto arriba y continúa con el desafío.
+                        </div>
+                    </div>`;
+            }
         }
 
         let geogebraHtml = '';
@@ -86,11 +128,11 @@
 
         // Load GeoGebra dynamically if needed
         if (q.type === 'geogebra') {
-            const materialId = (typeof q.options === 'object' && q.options.material_id) ? q.options.material_id : 'mxgqt3jk';
+            const materialId = (typeof q.options === 'object' && q.options.material_id) ? q.options.material_id : 'bGst5fJz';
             const ggbContainer = document.getElementById('ggb-element');
             if (ggbContainer) {
                 ggbContainer.innerHTML = `
-                    <iframe src="https://www.geogebra.org/material/iframe/id/${materialId}/width/800/height/600/border/888888/sfsb/true/smb/false/stb/false/stbh/false/ai/false/asb/false/sri/true/rc/false/ld/false/sdz/true/ctl/false" 
+                    <iframe src="https://www.geogebra.org/classic/${materialId}?embed" 
                             style="width: 100%; height: 100%; border: 0;" 
                             allow="geolocation; microphone; camera; clipboard-read; clipboard-write; amap" 
                             allowfullscreen>
@@ -140,22 +182,8 @@
         streakEl.className = `quiz-streak ${streak >= 3 ? 'active' : ''}`;
         xpEl.textContent = `💎 XP: ${xpEarned}`;
 
-        // Re-render to show correct/incorrect
+        // Re-render to show correct/incorrect answer and explanation
         renderQuestion(currentIndex);
-
-        // Auto-advance after a short delay
-        if (currentIndex < totalQuestions - 1) {
-            setTimeout(() => {
-                currentIndex++;
-                renderQuestion(currentIndex);
-            }, 1500);
-        } else {
-            // Last question - show submit button
-            const allAnswered = questions.every(q => answered[q.id]);
-            if (allAnswered) {
-                btnSubmit.style.display = 'inline-flex';
-            }
-        }
     }
 
     btnPrev.addEventListener('click', () => {
