@@ -1,0 +1,378 @@
+╔══════════════════════════════════════════════════════════════════════╗
+║              CHECKLIST PWA PARA HOSTING IONOS                        ║
+╚══════════════════════════════════════════════════════════════════════╝
+
+📋 REQUISITOS PREVIOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+□ Cuenta IONOS activa
+□ Dominio configurado
+□ Acceso FTP/SFTP
+□ Panel de control IONOS accesible
+
+
+🔒 PASO 1: VERIFICAR/ACTIVAR HTTPS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+IONOS incluye SSL GRATIS con Let's Encrypt:
+
+□ Acceder a Panel IONOS
+□ Ir a "Dominios y SSL" o "SSL/TLS"
+□ Verificar estado del certificado SSL
+   
+   Si no está activo:
+   □ Click "Activar SSL gratuito"
+   □ Seleccionar dominio
+   □ Click "Activar"
+   □ Esperar 5-15 minutos propagación
+   
+□ Verificar: https://tudominio.com muestra candado verde
+□ Sin warnings de seguridad
+
+
+⚙️ PASO 2: CONFIGURAR PHP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+□ Panel IONOS → "PHP"
+□ Seleccionar PHP 8.1 o superior
+□ Guardar cambios
+□ Verificar que se aplicó
+
+
+💻 PASO 3: COMPILAR LOCALMENTE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+En tu computadora (Windows con Laragon):
+
+□ Abrir terminal en: C:\laragon\www\EDU\
+□ Ejecutar: npm install
+□ Ejecutar: npm run generate:icons
+□ Ejecutar: npm run build
+□ Verificar sin errores
+
+
+📤 PASO 4: SUBIR ARCHIVOS VÍA FTP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Usar FileZilla, WinSCP o el File Manager de IONOS:
+
+Conexión FTP:
+   Host: ftp.tudominio.com
+   Usuario: (ver panel IONOS)
+   Password: (ver panel IONOS)
+   Puerto: 21 (FTP) o 22 (SFTP)
+
+ARCHIVOS OBLIGATORIOS PWA (subir a public_html/):
+
+□ manifest.json              → Raíz
+□ sw.js                      → Raíz
+□ offline.html              → Raíz
+□ browserconfig.xml         → Raíz
+□ .htaccess                 → Raíz (MUY IMPORTANTE)
+□ favicon.ico               → Raíz
+□ robots.txt                → Raíz
+
+□ build/                    → Carpeta completa con subcarpetas
+   └── assets/
+       ├── app-*.js
+       ├── app-*.css
+       └── pwa-*.js
+
+□ images/                   → Carpeta completa con iconos
+   ├── icon-16x16.png
+   ├── icon-32x32.png
+   ├── icon-72x72.png
+   ├── icon-96x96.png
+   ├── icon-128x128.png
+   ├── icon-144x144.png
+   ├── icon-152x152.png
+   ├── icon-192x192.png
+   ├── icon-384x384.png
+   └── icon-512x512.png
+
+□ css/                      → Si existe
+□ js/                       → Si existe
+
+
+📁 PASO 5: ESTRUCTURA EN IONOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Asegura esta estructura en tu hosting:
+
+/                           (Raíz del servidor)
+├── public_html/            ← AQUÍ va todo lo de /public
+│   ├── .htaccess
+│   ├── index.php
+│   ├── manifest.json      ← PWA
+│   ├── sw.js              ← PWA
+│   ├── offline.html       ← PWA
+│   ├── browserconfig.xml  ← PWA
+│   ├── favicon.ico
+│   ├── build/
+│   ├── images/            ← Iconos PWA
+│   ├── css/
+│   └── js/
+│
+└── (resto de Laravel fuera de public_html)
+    ├── app/
+    ├── bootstrap/
+    ├── config/
+    ├── .env               ← Configurar para producción
+    └── ...
+
+
+🔐 PASO 6: PERMISOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Si tienes acceso SSH, o usa File Manager:
+
+□ storage/          → 775
+□ bootstrap/cache/  → 775
+□ public_html/      → 755
+□ .htaccess         → 644
+□ manifest.json     → 644
+□ sw.js             → 644
+
+
+✅ PASO 7: VERIFICAR ARCHIVOS ACCESIBLES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Abre en tu navegador (REEMPLAZA tudominio.com):
+
+□ https://tudominio.com
+   ↳ Carga correctamente
+   ↳ Candado verde visible
+   ↳ Sin errores
+
+□ https://tudominio.com/manifest.json
+   ↳ Muestra JSON con configuración
+   ↳ NO error 404
+
+□ https://tudominio.com/sw.js
+   ↳ Muestra código JavaScript
+   ↳ NO error 404
+
+□ https://tudominio.com/offline.html
+   ↳ Muestra página offline bonita
+   ↳ NO error 404
+
+□ https://tudominio.com/images/icon-192x192.png
+   ↳ Muestra icono
+   ↳ NO error 404
+
+□ https://tudominio.com/images/icon-512x512.png
+   ↳ Muestra icono
+   ↳ NO error 404
+
+
+🔍 PASO 8: DEVTOOLS VERIFICATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Abre tu sitio: https://tudominio.com
+2. Presiona F12 (DevTools)
+3. Pestaña "Application"
+
+□ Manifest:
+   ✓ Name: "TrignoQuest..."
+   ✓ Short name: "TrignoQuest"
+   ✓ Theme color: #4F46E5
+   ✓ Iconos: 10 iconos visibles
+   ✓ Start URL: "/"
+   ✓ Display: "standalone"
+
+□ Service Workers:
+   ✓ Estado: "activated and is running"
+   ✓ Source: /sw.js
+   ✓ Status: Verde/Activo
+
+□ Console (pestaña):
+   ✓ [PWA] Service Worker registrado
+   ✓ Sin errores rojos
+
+
+📱 PASO 9: PROBAR INSTALACIÓN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ANDROID (Chrome):
+□ Abrir sitio en Chrome móvil
+□ Debe aparecer banner "Agregar a inicio"
+   O en menú (⋮) → "Instalar aplicación"
+□ Click instalar
+□ App aparece en pantalla de inicio
+□ Abrir app instalada
+□ Funciona sin barra del navegador
+
+iOS (Safari):
+□ Abrir sitio en Safari
+□ Toca botón compartir
+□ Selecciona "Agregar a pantalla de inicio"
+□ App aparece en pantalla de inicio
+□ Abrir app instalada
+□ Funciona correctamente
+
+DESKTOP (Chrome/Edge):
+□ Icono (+) visible en barra de direcciones
+□ Click en el icono
+□ Click "Instalar"
+□ App se abre en ventana standalone
+□ Aparece en menú inicio/aplicaciones
+
+
+🌐 PASO 10: LIGHTHOUSE TEST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+En Chrome DevTools:
+
+□ F12 → Pestaña "Lighthouse"
+□ Seleccionar "Progressive Web App"
+□ Click "Generate report"
+□ Esperar análisis
+
+RESULTADOS ESPERADOS:
+□ PWA Score: 90-100 ✨
+□ Installable: ✓
+□ PWA Optimized: ✓
+□ Fast and reliable: ✓
+□ Works offline: ✓
+
+
+🧪 PASO 11: PROBAR OFFLINE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+□ Navega por varias páginas (Mapa, Lab, Perfil)
+□ DevTools → Network tab
+□ Cambia a "Offline"
+□ Recarga la página
+□ Debe mostrar contenido cacheado
+□ Intenta ir a página nueva
+□ Debe mostrar offline.html bonita
+□ Cambia a "Online"
+□ Recarga
+□ Todo funciona normalmente
+
+
+🎯 OPTIMIZACIONES IONOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Opcional pero recomendado:
+
+□ Panel IONOS → Caché
+   □ Activar caché del servidor
+   □ Configurar TTL apropiado
+
+□ Panel IONOS → CDN
+   □ Activar CDN si está disponible en tu plan
+   □ Mejorará velocidad global
+
+□ Panel IONOS → Performance
+   □ Activar compresión GZIP
+   □ Activar HTTP/2
+
+
+🔄 ACTUALIZACIONES FUTURAS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Cuando hagas cambios:
+
+□ Local: Editar código
+□ Local: Editar public/sw.js
+   └─ Cambiar: const CACHE_NAME = 'trignoquest-v1.0.X'
+      (Incrementar número de versión)
+□ Local: npm run build
+□ Subir archivos actualizados vía FTP
+□ Panel IONOS: Limpiar caché si existe
+□ Navegador: Los usuarios verán "Nueva versión disponible"
+
+
+🚨 TROUBLESHOOTING IONOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PROBLEMA: No aparece candado HTTPS
+SOLUCIÓN:
+   □ Panel IONOS → SSL → Verificar activo
+   □ Esperar propagación (hasta 30 min)
+   □ Verificar .htaccess fuerza HTTPS
+
+PROBLEMA: manifest.json da 404
+SOLUCIÓN:
+   □ Verificar está en public_html/ (raíz)
+   □ NO en subcarpetas
+   □ Verificar permisos 644
+   □ Revisar .htaccess no lo bloquea
+
+PROBLEMA: Service Worker no registra
+SOLUCIÓN:
+   □ HTTPS DEBE estar activo
+   □ sw.js en raíz public_html/
+   □ Console muestra error específico
+   □ Limpiar caché navegador
+
+PROBLEMA: Icons no cargan
+SOLUCIÓN:
+   □ Verificar en: /images/icon-*.png
+   □ Permisos 644 en archivos
+   □ Permisos 755 en carpeta images/
+   □ Regenerar: npm run generate:icons
+
+PROBLEMA: App lenta
+SOLUCIÓN:
+   □ Panel IONOS → Activar caché
+   □ Panel IONOS → Activar compresión
+   □ Optimizar imágenes
+   □ Verificar plan IONOS adecuado
+
+
+📞 SOPORTE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+IONOS Support:
+   □ Panel IONOS → Soporte/Help
+   □ Abrir ticket
+   □ Chat en línea (si disponible)
+   □ Teléfono (ver panel)
+
+Preguntas útiles:
+   □ "¿Cómo activo SSL en mi dominio?"
+   □ "¿Cómo cambio a PHP 8.1?"
+   □ "¿Cómo limpio caché del servidor?"
+   □ "¿Mi plan soporta Service Workers?"
+
+
+═══════════════════════════════════════════════════════════════════════
+
+✅ CHECKLIST FINAL - TODO DEBE ESTAR ✓
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+HOSTING:
+□ SSL activo y funcionando
+□ PHP 8.1 o superior
+□ Todos los archivos subidos
+□ Permisos correctos
+
+ACCESIBILIDAD:
+□ https://tudominio.com carga
+□ /manifest.json accesible
+□ /sw.js accesible
+□ /offline.html accesible
+□ Iconos accesibles
+
+FUNCIONALIDAD:
+□ DevTools sin errores
+□ Service Worker activo
+□ Manifest válido
+□ Botón instalar visible
+□ App se puede instalar
+□ App funciona offline
+□ Lighthouse PWA 90+
+
+═══════════════════════════════════════════════════════════════════════
+
+🎉 ¡FELICITACIONES!
+
+Si todos los checks están ✓, tu PWA está funcionando
+perfectamente en IONOS y lista para ser instalada por
+millones de usuarios.
+
+¡TrignoQuest es ahora una aplicación móvil completa! 📱✨
+
+═══════════════════════════════════════════════════════════════════════

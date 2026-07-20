@@ -1,2 +1,11 @@
 User-agent: *
-Disallow:
+Allow: /
+
+# PWA Files
+Allow: /manifest.json
+Allow: /sw.js
+Allow: /offline.html
+Allow: /browserconfig.xml
+Allow: /images/icon-*.png
+
+Sitemap: /sitemap.xml
