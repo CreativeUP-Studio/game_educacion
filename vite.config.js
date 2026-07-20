@@ -8,7 +8,6 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/css/app.css',
-                'resources/css/pwa.css',
                 'resources/js/app.js'
             ],
             refresh: true,
@@ -25,8 +24,5 @@ export default defineConfig({
         watch: {
             ignored: ['**/storage/framework/views/**'],
         },
-    },
-    build: {
-        manifest: true
     }
 });

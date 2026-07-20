@@ -38,7 +38,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/game.css') }}">
     
-    @vite(['resources/css/app.css', 'resources/css/pwa.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
 </head>
 <body class="@yield('body-class', '')">
